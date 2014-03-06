@@ -17,24 +17,12 @@ public class KursesFragment extends ListFragment {
         super.onActivityCreated(savedInstanceState);
         JSONParse jParse = new JSONParse();
         jParse.execute();
-        String data[] = new String[] { "one", "two", "three", "four" };
-        if (jParse.getKurs()!=null)
-        data[3]= jParse.getKurs();
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(),
-                android.R.layout.simple_list_item_1, data);
-        setListAdapter(adapter);
     }
 
-    public static class JSONParse extends AsyncTask<Void, Void, JSONArray> {
+    public class JSONParse extends AsyncTask<Void, Void, JSONArray> {
 
-        private static String url = "http://gkurs.esy.es/json2.php";
+        private static final String url = "http://gkurs.esy.es/json.php";
         private static final String TAG_FIO = "FIO";
-        private ArrayList<String> fio;
-        private   String p ;
-
-        public String getKurs(){
-            return p;
-        }
 
         @Override
         protected JSONArray doInBackground(Void... voids) {
@@ -47,14 +35,17 @@ public class KursesFragment extends ListFragment {
 
         @Override
         protected void onPostExecute(JSONArray json) {
+             ArrayList<String> kurses = new ArrayList<String>();
+             ArrayAdapter<String> adapter;
             try {
                 JSONObject c;
-                c = json.getJSONObject(0);
-                p = c.getString("FIO");
-               /* for(int i=0; i<0; i++){
+               for(int i=0; i<json.length(); i++){
                     c = json.getJSONObject(i);
-                    fio.add(c.getString(TAG_FIO));
-                }*/
+                    kurses.add(c.getString(TAG_FIO));
+                }
+                adapter = new ArrayAdapter<String>(getActivity(),
+                        android.R.layout.simple_list_item_1, kurses);
+                setListAdapter(adapter);
 
             } catch (JSONException e) {
                 e.printStackTrace();
