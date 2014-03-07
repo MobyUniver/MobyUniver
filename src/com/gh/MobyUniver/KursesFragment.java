@@ -7,7 +7,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
-import android.widget.Toast;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -57,8 +56,9 @@ public class KursesFragment extends Fragment {
                 JSONObject c;
                 for(int i=0; i<json.length(); i++){
                     c = json.getJSONObject(i);
-                    kurses.add(new KursesItems(c.getString("id_stud"), c.getString("FIO"), R.drawable.ic_launcher ));
+                    kurses.add(new KursesItems(c.getString("id_stud"), c.getString("FIO"), "http://gkurs.esy.es/images/1.png" ));
                     //Toast.makeText(getActivity(), kurses.get(i).id, Toast.LENGTH_SHORT).show();
+
                 }
                 adapter = new KursesAdapter(getActivity(), kurses);
                 lvMain.setAdapter(adapter);
