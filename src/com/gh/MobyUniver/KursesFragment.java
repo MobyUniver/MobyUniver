@@ -20,8 +20,6 @@ public class KursesFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.kurses_layout_fragment,
                 container, false);
-
-       // assert view != null;
         lvMain = (ListView) view.findViewById(R.id.lvMain);
         return view;
     }
@@ -51,18 +49,25 @@ public class KursesFragment extends Fragment {
         protected void onPostExecute(JSONArray json) {
             ArrayList<KursesItems> kurses = new ArrayList<KursesItems>();
             KursesAdapter adapter;
+            int items_images[] = {
+                    R.drawable.android,
+                    R.drawable.html5,
+                    R.drawable.java,
+                    R.drawable.sql,
+                    R.drawable.ubuntu,
+                    R.drawable.unity3d
+            };
 
             try {
                 JSONObject c;
                 for(int i=0; i<json.length(); i++){
                     c = json.getJSONObject(i);
-                    kurses.add(new KursesItems(c.getString("id_stud"), c.getString("FIO"), "http://gkurs.esy.es/images/1.png" ));
+                    kurses.add(new KursesItems(c.getString("id_stud"), c.getString("FIO"), items_images[i]));
                     //Toast.makeText(getActivity(), kurses.get(i).id, Toast.LENGTH_SHORT).show();
 
                 }
                 adapter = new KursesAdapter(getActivity(), kurses);
                 lvMain.setAdapter(adapter);
-
             } catch (JSONException e) {
                 e.printStackTrace();
             }

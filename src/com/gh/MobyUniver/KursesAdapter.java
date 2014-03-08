@@ -34,7 +34,7 @@ public class KursesAdapter extends BaseAdapter {
         objects = items;
         lInflater = (LayoutInflater) this.context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        new ImgGet().execute();
+       // new ImgGet().execute();
     }
 
     private Bitmap getImageBitmap(String url) {
@@ -93,13 +93,13 @@ public class KursesAdapter extends BaseAdapter {
         assert view != null;
         //noinspection ConstantConditions
         ((TextView) view.findViewById(R.id.kursDescr)).setText(p.kurs);
-
+        ((ImageView) view.findViewById(R.id.kursImage)).setImageResource(p.img);
 
 
 
         return view;
     }
-    private class ImgGet extends AsyncTask<Void, Void, Bitmap>{
+    /*private class ImgGet extends AsyncTask<Void, Void, Bitmap>{
 
         @Override
         protected Bitmap doInBackground(Void... voids) {
@@ -110,6 +110,6 @@ public class KursesAdapter extends BaseAdapter {
         protected void onPostExecute(Bitmap b) {
             ((ImageView) view.findViewById(R.id.kursImage)).setImageBitmap(b);
         }
-    }
+    }*/
 
 }

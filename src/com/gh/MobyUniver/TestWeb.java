@@ -37,7 +37,7 @@ public class TestWeb extends Fragment {
         //JSONParse jParse = new JSONParse();
         //jParse.execute();
        imgw = (ImageView) view.findViewById(R.id.imageView);
-        new ImgGet().execute();
+       // new ImgGet().execute();
 
         return view;
 
@@ -73,7 +73,7 @@ public class TestWeb extends Fragment {
             }
         }
     }
-    private Bitmap getImageBitmap(String url) {
+   /* private Bitmap getImageBitmap(String url) {
         Bitmap bm = null;
         try {
             URL aURL = new URL(url);
@@ -100,6 +100,6 @@ public class TestWeb extends Fragment {
         protected void onPostExecute(Bitmap b) {
             imgw.setImageBitmap(b);
         }
-    }
+    }*/
 
 }
