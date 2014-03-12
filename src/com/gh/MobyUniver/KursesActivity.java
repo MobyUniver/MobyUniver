@@ -1,9 +1,13 @@
 package com.gh.MobyUniver;
 
 import android.app.Activity;
+import android.app.Fragment;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 
-public class MyActivity extends Activity {
+import static android.content.pm.ActivityInfo.*;
+
+public class KursesActivity extends Activity {
     /**
      * Called when the activity is first created.
      */

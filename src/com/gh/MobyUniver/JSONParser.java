@@ -1,5 +1,4 @@
 package com.gh.MobyUniver;
-
 import android.util.Log;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -33,9 +32,9 @@ public class JSONParser {
             DefaultHttpClient httpClient = new DefaultHttpClient();
             HttpPost httpPost = new HttpPost(url);
 
-            List nameValuePairs = new ArrayList(1);
-            nameValuePairs.add(new BasicNameValuePair("value", "1"));
-            httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs, "UTF-8"));
+             // List nameValuePairs = new ArrayList(1);
+            // nameValuePairs.add(new BasicNameValuePair("value", "1"));
+           // httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs, "UTF-8"));
             HttpResponse httpResponse = httpClient.execute(httpPost);
             HttpEntity httpEntity = httpResponse.getEntity();
             is = httpEntity.getContent();

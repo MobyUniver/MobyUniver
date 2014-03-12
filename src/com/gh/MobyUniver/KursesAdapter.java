@@ -37,22 +37,6 @@ public class KursesAdapter extends BaseAdapter {
        // new ImgGet().execute();
     }
 
-    private Bitmap getImageBitmap(String url) {
-        Bitmap bm = null;
-        try {
-            URL aURL = new URL(url);
-            URLConnection conn = aURL.openConnection();
-            conn.connect();
-            InputStream is = conn.getInputStream();
-            BufferedInputStream bis = new BufferedInputStream(is);
-            bm = BitmapFactory.decodeStream(bis);
-            bis.close();
-            is.close();
-        } catch (IOException e) {
-            Log.e(TAG, "Error getting bitmap", e);
-        }
-        return bm;
-    }
 
     // кол-во элементов
     @Override
@@ -80,36 +64,17 @@ public class KursesAdapter extends BaseAdapter {
     // пункт списка
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        // используем созданные, но не используемые view
+
          view = convertView;
         if (view == null) {
             view = lInflater.inflate(R.layout.kurses_items_adaper, parent, false);
         }
-
         KursesItems p = getItemObj(position);
-
-        // заполняем View в пункте списка данными из товаров: наименование, цена
-        // и картинка
-        assert view != null;
         //noinspection ConstantConditions
         ((TextView) view.findViewById(R.id.kursDescr)).setText(p.kurs);
-        ((ImageView) view.findViewById(R.id.kursImage)).setImageResource(p.img);
-
-
+        ((ImageView) view.findViewById(R.id.kursImage)).setImageBitmap(p.img);
 
         return view;
     }
-    /*private class ImgGet extends AsyncTask<Void, Void, Bitmap>{
-
-        @Override
-        protected Bitmap doInBackground(Void... voids) {
-
-            return getImageBitmap("http://gkurs.esy.es/images/1.png");
-        }
-        @Override
-        protected void onPostExecute(Bitmap b) {
-            ((ImageView) view.findViewById(R.id.kursImage)).setImageBitmap(b);
-        }
-    }*/
 
 }
