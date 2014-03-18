@@ -49,12 +49,13 @@ public class KursesFragment extends Fragment implements AdapterView.OnItemClickL
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
         //Toast.makeText(getActivity(), ""+i, Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(getActivity(), ArticleActivity.class);
-        intent.putExtra("tstVl",kurses.get(i).kurs);
+        intent.putExtra("id",kurses.get(i).id);
+        intent.putExtra("img", kurses.get(i).img);
         startActivity(intent);
 
     }
 
-    public class JSONParse extends AsyncTask<Void, Void, JSONArray> {
+    private class JSONParse extends AsyncTask<Void, Void, JSONArray> {
         private static final String url = "http://gkurs.esy.es/kurses.php";
         @Override
         protected JSONArray doInBackground(Void... voids) {
