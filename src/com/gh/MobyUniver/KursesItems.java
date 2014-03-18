@@ -5,7 +5,7 @@ import android.graphics.Bitmap;
 
 public class KursesItems {
      String id;
-     String kurs;
+    public String kurs;
      Bitmap img;
 
     public KursesItems(String id, String kurs, Bitmap img) {

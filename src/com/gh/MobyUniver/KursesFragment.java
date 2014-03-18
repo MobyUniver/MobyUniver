@@ -1,5 +1,6 @@
 package com.gh.MobyUniver;
 import android.app.Fragment;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
@@ -8,8 +9,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.Toast;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -20,11 +23,12 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
 
-public class KursesFragment extends Fragment {
+public class KursesFragment extends Fragment implements AdapterView.OnItemClickListener{
     static ListView lvMain;
     static View view;
     static final int JSON_LENGTH = 6;
     static final Bitmap[] image = new Bitmap[JSON_LENGTH];
+    ArrayList<KursesItems> kurses = new ArrayList<KursesItems>();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -41,6 +45,15 @@ public class KursesFragment extends Fragment {
         jParse.execute();
     }
 
+    @Override
+    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+        //Toast.makeText(getActivity(), ""+i, Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(getActivity(), ArticleActivity.class);
+        intent.putExtra("tstVl",kurses.get(i).kurs);
+        startActivity(intent);
+
+    }
+
     public class JSONParse extends AsyncTask<Void, Void, JSONArray> {
         private static final String url = "http://gkurs.esy.es/kurses.php";
         @Override
@@ -53,12 +66,12 @@ public class KursesFragment extends Fragment {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-           view.findViewById(R.id.progressLayout).setVisibility(View.VISIBLE);
+            view.findViewById(R.id.progressLayout).setVisibility(View.VISIBLE);
         }
         @Override
         protected void onPostExecute(JSONArray json) {
             view.findViewById(R.id.progressLayout).setVisibility(View.GONE);
-            ArrayList<KursesItems> kurses = new ArrayList<KursesItems>();
+
             KursesAdapter adapter;
             int items_images[] = {
                     R.drawable.android,
@@ -82,6 +95,7 @@ public class KursesFragment extends Fragment {
                 gth.execute(img_url);
                 adapter = new KursesAdapter(getActivity(), kurses);
                 lvMain.setAdapter(adapter);
+                lvMain.setOnItemClickListener(KursesFragment.this);
             } catch (JSONException e) {
                 e.printStackTrace();
             }

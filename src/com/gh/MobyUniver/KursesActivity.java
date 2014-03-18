@@ -8,9 +8,7 @@ import android.os.Bundle;
 import static android.content.pm.ActivityInfo.*;
 
 public class KursesActivity extends Activity {
-    /**
-     * Called when the activity is first created.
-     */
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
