@@ -28,10 +28,9 @@ public class ArticleFragment extends Fragment {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-
         id = getActivity().getIntent().getExtras().getString("id");
         ((ImageView) view.findViewById(R.id.imageView)).setImageBitmap((Bitmap) getActivity().getIntent().getParcelableExtra("img"));
-        VideoView vid = (VideoView) view.findViewById(R.id.video);
+        VideoView vid = (VideoView) view.findViewById(R.id.videoLess);
         new JSONParseArticle().execute();
         String videoSourse = "http://gkurs.esy.es/Command & Conquer 2013 (Generals 2) Alpha Gameplay Trailer.mp4";
         vid.setVideoURI(Uri.parse(videoSourse));
@@ -39,6 +38,7 @@ public class ArticleFragment extends Fragment {
         vid.requestFocus(0);
         vid.start();
     }
+
 
     private class JSONParseArticle extends AsyncTask<Void, Void, JSONArray> {
         private static final String url = "http://gkurs.esy.es/article.php";
@@ -60,7 +60,7 @@ public class ArticleFragment extends Fragment {
 
             try {
                 JSONObject c = json.getJSONObject(0);
-               ((TextView) view.findViewById(R.id.textView)).setText(c.getString("content"));
+                ((TextView) view.findViewById(R.id.textView)).setText(c.getString("content"));
 
             } catch (JSONException e) {
                 e.printStackTrace();
