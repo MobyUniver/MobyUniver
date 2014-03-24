@@ -27,8 +27,10 @@ public class KursesFragment extends Fragment implements AdapterView.OnItemClickL
     static ListView lvMain;
     static View view;
     static final int JSON_LENGTH = 6;
-    static final Bitmap[] image = new Bitmap[JSON_LENGTH];
+    static Bitmap[] image = new Bitmap[JSON_LENGTH];
     ArrayList<KursesItems> kurses = new ArrayList<KursesItems>();
+    ImgGet gth;
+    static String img_url[] = new String[JSON_LENGTH];
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -42,6 +44,8 @@ public class KursesFragment extends Fragment implements AdapterView.OnItemClickL
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         JSONParse jParse = new JSONParse();
+        gth = new ImgGet();
+        gth.execute(img_url);
         jParse.execute();
     }
 
@@ -49,8 +53,9 @@ public class KursesFragment extends Fragment implements AdapterView.OnItemClickL
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
         //Toast.makeText(getActivity(), ""+i, Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(getActivity(), ArticleActivity.class);
-        intent.putExtra("id",kurses.get(i).id);
-        intent.putExtra("img", kurses.get(i).img);
+        intent.putExtra("id",kurses.get(i).getId());
+        intent.putExtra("img", kurses.get(i).getImg());
+        intent.putExtra("video", kurses.get(i).getVideo());
         startActivity(intent);
 
     }
@@ -82,18 +87,20 @@ public class KursesFragment extends Fragment implements AdapterView.OnItemClickL
                     R.drawable.ubuntu,
                     R.drawable.unity3d
             };
-            String img_url[] = new String[json.length()];
+
             try {
-                JSONObject c;
+                JSONObject c = null;
                 //image = new Bitmap[json.length()];
                 for(int i=0; i< json.length(); i++){
                     c = json.getJSONObject(i);
                     img_url[i] = "http://gkurs.esy.es/images/"+c.getString("img");
-                    kurses.add(new KursesItems(c.getString("id_kurs"), c.getString("title"), image[i]));
+                }
+
+                for(int i= 0; i< json.length(); i++) {
+                    c = json.getJSONObject(i);
+                    kurses.add(new KursesItems(c.getString("id_kurs"), c.getString("title"), image[i], c.getString("video")));
                     // Toast.makeText(getActivity(), img_url[i], Toast.LENGTH_SHORT).show();
                 }
-                ImgGet gth = new ImgGet();
-                gth.execute(img_url);
                 adapter = new KursesAdapter(getActivity(), kurses);
                 lvMain.setAdapter(adapter);
                 lvMain.setOnItemClickListener(KursesFragment.this);
@@ -121,7 +128,9 @@ public class KursesFragment extends Fragment implements AdapterView.OnItemClickL
         }
         @Override
         protected Void doInBackground(String... urls) {
-            for (int i = 0; i< JSON_LENGTH; i++) image[i] = getImageBitmap(urls[i]);
+            for (int i = 0; i< JSON_LENGTH; i++) {
+                image[i] = getImageBitmap(urls[i]);
+            }
             return null;
         }
     }

@@ -2,6 +2,8 @@ package com.gh.MobyUniver;
 
 import android.app.Fragment;
 import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -29,10 +31,11 @@ public class ArticleFragment extends Fragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         id = getActivity().getIntent().getExtras().getString("id");
-        ((ImageView) view.findViewById(R.id.imageView)).setImageBitmap((Bitmap) getActivity().getIntent().getParcelableExtra("img"));
+        Drawable d = new BitmapDrawable(getResources(),(Bitmap) getActivity().getIntent().getParcelableExtra("img"));
         VideoView vid = (VideoView) view.findViewById(R.id.videoLess);
+        getActivity().getActionBar().setIcon(d);
         new JSONParseArticle().execute();
-        String videoSourse = "http://gkurs.esy.es/Command & Conquer 2013 (Generals 2) Alpha Gameplay Trailer.mp4";
+        String videoSourse = "http://gkurs.esy.es/Video/"+getActivity().getIntent().getExtras().getString("video");
         vid.setVideoURI(Uri.parse(videoSourse));
         vid.setMediaController(new MediaController(getActivity()));
         vid.requestFocus(0);
